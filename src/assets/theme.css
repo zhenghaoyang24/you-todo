@@ -1,0 +1,64 @@
+:root[theme="light"] {
+    --you-background-color: #efefef;
+    --theme-button-image: url('icon/aside-bar/theme-button-moon.png');
+    --aside-todo-button-image: url('icon/aside-bar/todo-light.png');
+    --aside-data-button-image: url('icon/aside-bar/data-light.png');
+    --aside-timer-button-image: url('icon/aside-bar/timer-light.png');
+    --aside-border-right-color: #d5d5d5;
+    --p-text-color: #000000;
+    --el-calendar-border-color: #d1d1d1;
+    --el-border-color-lighter: #dddddd !important;
+    --el-button-small-hover: #e1e1e1;
+    --webkit-scrollbar-track-bgc: #a3a3a3;
+    --select-grade-option-box-bgc: #ededed;
+    --you-button-bgc-disabled: #9c9c9c;
+    --you-button-color-disabled: #dadada;
+    --date-todo-item-del-color: #aaaaaa;
+
+    /*覆盖element-plus值*/
+    --el-disabled-border-color: var(--el-calendar-border-color);
+    --el-bg-color-overlay: #ededed !important;
+    --el-text-color-regular:var(--p-text-color);
+    --el-fill-color-blank:var(--you-background-color);
+    --el-border-color:var(--el-calendar-border-color);
+    --el-border-color-light:var(--el-calendar-border-color);
+
+}
+:root[theme="dark"] {
+    --you-background-color: #252525;
+    --theme-button-image:url('icon/aside-bar/theme-button-son.png');
+    --aside-todo-button-image:url('icon/aside-bar/todo-dark.png');
+    --aside-data-button-image:url('icon/aside-bar/data-dark.png');
+    --aside-timer-button-image:url('icon/aside-bar/timer-dark.png');
+    --aside-border-right-color: #353535;
+    --p-text-color:white;
+    --el-calendar-border-color: #3e3e3e;
+    --el-border-color-lighter: #323232 !important;
+    --el-button-small-hover: #393939;
+    --webkit-scrollbar-track-bgc: #a8a8a8;
+    --select-grade-option-box-bgc: #222222;
+    --you-button-bgc-disabled: #4c4c4c;
+    --you-button-color-disabled: #888888;
+    --date-todo-item-del-color: #595959;
+
+    /*覆盖element-plus值*/
+    --el-disabled-border-color: var(--el-calendar-border-color);
+    --el-bg-color-overlay: #222222 !important;
+    --el-text-color-regular:var(--p-text-color);
+    --el-fill-color-blank:var(--you-background-color);
+    --el-border-color:var(--el-calendar-border-color);
+    --el-border-color-light:var(--el-calendar-border-color);
+}
+:root {
+    --add-todo-box-input-placeholder: #808080;
+    --aside-pading: 10px;
+    --aside-bar-width: 40px;
+    --aside-active-border-botton-color: #329fef;
+    --transition-time: 0.2s;
+    --el-calendar-day-span-border-color: #329fef;
+    --el-calendar-day-span-size: 18px;
+    /*覆盖element-plus值*/
+    --el-text-color-placeholder: #7c7c7c;
+    --el-datepicker-active-color: #41a4ed !important;
+
+}
