@@ -22,6 +22,7 @@
     --el-fill-color-blank:var(--you-background-color);
     --el-border-color:var(--el-calendar-border-color);
     --el-border-color-light:var(--el-calendar-border-color);
+    --el-fill-color-light: #dadada;
 
 }
 :root[theme="dark"] {
@@ -48,6 +49,7 @@
     --el-fill-color-blank:var(--you-background-color);
     --el-border-color:var(--el-calendar-border-color);
     --el-border-color-light:var(--el-calendar-border-color);
+    --el-fill-color-light: #3e3e3e;
 }
 :root {
     --add-todo-box-input-placeholder: #808080;

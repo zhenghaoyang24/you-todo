@@ -1,17 +1,25 @@
 <script setup>
-
+import {ref} from "vue";
 const props = defineProps({
   btnDisabled: {
+    type: Boolean,
+    default: false
+  },
+  buttonState:{
     type: Boolean,
     default: true
   }
 });
+
+const buttonState = ref(true)
+
 </script>
 
 <template>
-<button type="button" :disabled="props.btnDisabled" class="you-button">
-  <slot name="buttonName">按钮</slot>
-</button>
+  <button type="button" :disabled="props.btnDisabled"
+          :class="['you-button', {'you-button-true':props.buttonState===true,'you-button-false':props.buttonState===false}]">
+    {{props.buttonState? '开始':'暂停'}}
+  </button>
 </template>
 
 <style scoped>
@@ -23,12 +31,16 @@ const props = defineProps({
 .you-button:enabled{
   cursor: pointer;
   color: white;
-  background-color: #329fef;
 }
 .you-button:disabled{
   cursor: not-allowed;
   background-color: var(--you-button-bgc-disabled);
   color: var(--you-button-color-disabled);
 }
-
+.you-button-true{
+  background-color: #2ab355;
+}
+.you-button-false{
+  background-color: #ff0000;
+}
 </style>

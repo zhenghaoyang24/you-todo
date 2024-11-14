@@ -23,6 +23,9 @@
 }
 
 html, body{
+  overflow-x: hidden;
+
+  min-width: 940px;
   padding: 0;
   margin: 0;
   background-color: var(--you-background-color);
