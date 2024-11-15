@@ -16,6 +16,7 @@ const props = defineProps({
 
 <style scoped>
 .you-button{
+  user-select: none;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid var(--el-border-color-light);

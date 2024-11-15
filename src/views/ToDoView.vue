@@ -38,9 +38,12 @@ const calendarDayFn = (data) => {
           <span class="slot-day">{{ parseInt(data.day.split("-").slice(2).join("-"), 10) }}</span>
         </div>
         <div class="todo-date-list-box">
-          <div v-for="item in dateTodos(data)" :style="{backgroundColor:item.gradeColor}">
-            <span>{{item.todoTitle}}</span>
-            <span v-if="item.state">✔</span>
+          <div class="todo-date-list-item-box" v-for="item in dateTodos(data)" :style="{backgroundColor:item.gradeColor}">
+            <span :title="item.todoTitle">{{item.todoTitle}}</span>
+            <span v-if="dateUtil.judgeOverdueUtil([item.todoDeadline.year,item.todoDeadline.month,item.todoDeadline.day],item.state)">
+              ✘
+            </span>
+            <span v-else-if="item.state">✔</span>
             </div>
         </div>
       </template>
@@ -52,6 +55,13 @@ const calendarDayFn = (data) => {
 </template>
 
 <style scoped>
+.todo-date-list-item-box>span:nth-child(1){
+  flex: 1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
 .todo-date-list-box{
   transition: all var(--transition-time);
   margin-top: 2px;
@@ -71,6 +81,7 @@ const calendarDayFn = (data) => {
     transition: all var(--transition-time);
     padding: 2px 4px;
     font-size: 10px;
+    height: 15px;
     margin-bottom: 5px;
     background-color: #329fef;
   }

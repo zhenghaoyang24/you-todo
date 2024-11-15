@@ -1,37 +1,70 @@
 <script setup>
 import {useTodoStorage} from "@/stores/todo.js";
+import dateUtil from "@/utils/dateUtil.js";
+import {computed, ref} from "vue";
 
+const centerDialogVisible = ref(false) //dialog
 const store = useTodoStorage();
 const props = defineProps({
   todoItem: {
     required: true
   }
 })
-const deleteTodoItem = (id)=>{
-  let index = store.todoListStorage.findIndex(item => item.todoId===id)
-  store.todoListStorage.splice(index,1)
+const overDueState = computed(() => {   //是否逾期
+  return dateUtil.judgeOverdueUtil([props.todoItem.todoDeadline.year, props.todoItem.todoDeadline.month, props.todoItem.todoDeadline.day], props.todoItem.state)
+})
+const deleteTodoItemFn = () => {
+  let index = store.todoListStorage.findIndex(item => item.todoId === props.todoItem.todoId)
+  store.todoListStorage.splice(index, 1)
+  centerDialogVisible.value = false
+
+}
+const changeTodoState = (v, item) => {
+  if (!v)
+    item.state = !item.state
 }
 </script>
 
 <template>
+  <el-dialog
+      v-model="centerDialogVisible"
+      title=""
+      width="400"
+      align-center
+  >
+    <span>你确定要删除这条待办及其相关数据吗？</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="deleteTodoItemFn">
+          确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
   <div class="date-todo-item-box">
     <div class="date-todo-item-ctrl-left">
-      <span @click="()=> todoItem.state = !todoItem.state"
-            :style="{borderColor:todoItem.gradeColor,color:todoItem.state? todoItem.gradeColor:'var(--you-background-color)'}">
+      <span @click="changeTodoState(overDueState,todoItem)"
+            :style="{borderColor:overDueState? 'var(--you-button-bgc-disabled)':todoItem.gradeColor,
+            color:todoItem.state? todoItem.gradeColor:'var(--you-background-color)',
+            cursor:overDueState? 'not-allowed':'pointer'}">
         ✔
       </span>
       <div class="date-todo-item-info">
-        <input type="text" v-model="todoItem.todoTitle" :disabled="todoItem.state"
-               :style="{color: todoItem.state? 'var(--date-todo-item-del-color)':'var(--p-text-color)',
-               cursor:todoItem.state? 'not-allowed':'text'}">
+        <input type="text" v-model="todoItem.todoTitle" :disabled="todoItem.state || overDueState"
+               :style="{color: todoItem.state||overDueState? 'var(--date-todo-item-del-color)':'var(--p-text-color)',
+               cursor:todoItem.state||overDueState? 'not-allowed':'text'}">
         <div>
           {{ todoItem.todoStartDate.year }}/{{ todoItem.todoStartDate.month }}/{{ todoItem.todoStartDate.day }} -
           {{ todoItem.todoDeadline.year }}/{{ todoItem.todoDeadline.month }}/{{ todoItem.todoDeadline.day }}
           {{ todoItem.todoDeadline.hour }}:{{ todoItem.todoDeadline.minute }}
+          <span style="color: #ff2f2f;margin-left: 5px" v-if="overDueState">
+            逾期
+          </span>
         </div>
       </div>
     </div>
-    <div class="date-todo-item-del" @click="deleteTodoItem(todoItem.todoId)">
+    <div class="date-todo-item-del" @click="centerDialogVisible = true">
       ×
     </div>
   </div>
@@ -41,6 +74,7 @@ const deleteTodoItem = (id)=>{
 <style scoped>
 .date-todo-item-info {
   padding-left: 5px;
+
   > input {
     color: var(--p-text-color);
     transition: all var(--transition-time);

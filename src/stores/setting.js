@@ -7,6 +7,7 @@ export const useSettingStore = defineStore(
         // 设置主题
         const storeCurrentTheme = ref('light')
         const clockRemain = ref(0)  //剩余时间
+        const totalTimer = ref(0)  //总时间 用于计算进度
         const ringToneState = ref(true)  //true为播放
         const todoGradeColor = ('#ea5455')
         const storeChangeTheme =(theme)=> {
@@ -24,6 +25,9 @@ export const useSettingStore = defineStore(
         const changeRingToneState = ()=>{
             ringToneState.value = !ringToneState.value
         }
+        const initTotalTimer = (h,m,s)=>{
+            totalTimer.value = h * 3600 + m * 60 + s
+        }
         const initClockRemain = (h,m,s)=>{
             clockRemain.value = h * 3600 + m * 60 + s
         }
@@ -34,8 +38,8 @@ export const useSettingStore = defineStore(
                 window.document.documentElement.setAttribute('theme', 'light')
             }
         }
-        return {todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
-        ,changeRingToneState}
+        return {totalTimer,todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
+        ,changeRingToneState,initTotalTimer}
     },
     {
         persist: true

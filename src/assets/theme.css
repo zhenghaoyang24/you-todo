@@ -23,6 +23,7 @@
     --el-border-color:var(--el-calendar-border-color);
     --el-border-color-light:var(--el-calendar-border-color);
     --el-fill-color-light: #dadada;
+    --el-bg-color: #efefef;  /*dialog背景颜色*/
 
 }
 :root[theme="dark"] {
@@ -50,6 +51,7 @@
     --el-border-color:var(--el-calendar-border-color);
     --el-border-color-light:var(--el-calendar-border-color);
     --el-fill-color-light: #3e3e3e;
+    --el-bg-color: #373737;  /*dialog背景颜色*/
 }
 :root {
     --add-todo-box-input-placeholder: #808080;
@@ -62,5 +64,4 @@
     /*覆盖element-plus值*/
     --el-text-color-placeholder: #7c7c7c;
     --el-datepicker-active-color: #41a4ed !important;
-
 }

@@ -1,18 +1,27 @@
 <script setup>
-import {ref, computed, onMounted,onBeforeUnmount} from "vue";
+import {ref, computed, onMounted, onBeforeUnmount} from "vue";
 import YouButton from "@/components/YouButton.vue";
 import DoubleStateButton from "@/components/DoubleStateButton.vue";
 import {useSettingStore} from "@/stores/setting.js";
+
 const store = useSettingStore();
+
+
 onMounted(() => {
   timerHour.value = Math.floor(store.clockRemain / 3600)
   timerMinute.value = Math.floor((store.clockRemain % 3600) / 60)
   timerSecond.value = Math.floor(store.clockRemain % 3600 % 60)
 })
-onBeforeUnmount(()=>{
+onBeforeUnmount(() => {
   clearTimeout(timerClock.value)
 })
-
+const processRate = computed(() => {  //计算进度
+  if ((store.totalTimer - store.clockRemain) !== store.totalTimer)
+    return Math.floor((store.totalTimer - store.clockRemain) / store.totalTimer * 100)
+  else {
+    return 100
+  }
+})
 
 const editTimerState = ref(true) //true 为编辑
 const audioMusicRef = ref(null) //audio
@@ -23,7 +32,9 @@ const timerHour = ref(0)
 const timerMinute = ref(25)
 const timerSecond = ref(0)
 
-const startTimerFn = ()=>{
+
+
+const startTimerFn = () => {
   clearTimeout(timerClock.value)
   store.initClockRemain(timerHour.value, timerMinute.value, timerSecond.value)
   timerClock.value = setInterval(() => {
@@ -45,6 +56,7 @@ const startBtn = () => {
     timerClockStopState.value = false  //按钮为开始状态（显示暂停）
     editTimerState.value = false
     startTimerFn()
+    store.initTotalTimer(timerHour.value, timerMinute.value, timerSecond.value)
   } else {
     editTimerState.value = true
     clearTimeout(timerClock.value)
@@ -60,7 +72,7 @@ const timerStateBtn = () => {
     timerClockStopState.value = true
   }
 }
-
+const format = (percentage) => (percentage === 100 ? 'success' : 'exception')
 const optionsHour = Array.from({length: 24}).map((_, idx) => ({
   value: idx,
   label: idx,
@@ -128,24 +140,28 @@ const startBtnState = computed(() => {  //启动按钮是否可按
       </div>
       <div class="timer-set-start-box">
         <YouButton @click="startBtn" :disabled="startBtnState">
-          <template #buttonName>启动倒计时</template>
+          <template #buttonName>开始专注</template>
         </YouButton>
       </div>
     </div>
     <div v-else class="timer-view-clock-main">
       <div class="timer-view-clock-box">
-        <span>{{ timerHour }}:</span><span>{{ timerMinute }}:</span><span>{{ timerSecond }}</span>
+        <span v-if="timerHour!==0">{{ timerHour }}:</span>
+        <span v-if="!(timerHour===0&&timerMinute===0)">{{ timerMinute }}:</span>
+        <span>{{ timerSecond }}</span>
+      </div>
+      <div class="demo-progress">
+        <el-progress :percentage="processRate" :status="format(processRate)"/>
       </div>
       <div class="timer-view-clock-control-box">
         <audio preload ref="audioMusicRef">
-          <source src="../assets/music/music.mp3" />
+          <source src="../assets/music/music.mp3"/>
         </audio>
         <YouButton @click="startBtn" :disabled="false">
-          <template #buttonName>编辑定时器</template>
+          <template #buttonName>编辑时间</template>
         </YouButton>
         <DoubleStateButton @click="timerStateBtn" :disabled="startBtnState" :buttonState="timerClockStopState">
         </DoubleStateButton>
-
       </div>
     </div>
 
@@ -153,6 +169,14 @@ const startBtnState = computed(() => {  //启动按钮是否可按
 </template>
 
 <style scoped>
+.demo-progress .el-progress--line {
+  margin-bottom: 50px;
+  width: 300px;
+}
+:deep(.el-progress__text) {
+  min-width: 15px;
+}
+
 .timer-view-clock-box {
   display: flex;
   justify-content: center;

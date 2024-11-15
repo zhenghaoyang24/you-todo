@@ -5,6 +5,13 @@ export default {
         return elDatePickerDeadline >= selectDate;
     },
 
+    // 是否逾期
+    judgeOverdueUtil(date,state){
+        const now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
+        const date_ = new Date(date[0],date[1]-1,date[2])
+        return now > date_ && !state;
+    },
+
     getCurrentDateUtil() {
         let now = new Date();
         let year = now.getFullYear();
