@@ -10,6 +10,9 @@ const props = defineProps({
     required: true
   }
 })
+const todoStateEnable = computed(()=>{
+  return  dateUtil.judgeTodoStateChangeEnableUtil(props.todoItem)
+})
 const overDueState = computed(() => {   //是否逾期
   return dateUtil.judgeOverdueUtil([props.todoItem.todoDeadline.year, props.todoItem.todoDeadline.month, props.todoItem.todoDeadline.day], props.todoItem.state)
 })
@@ -19,8 +22,8 @@ const deleteTodoItemFn = () => {
   centerDialogVisible.value = false
 
 }
-const changeTodoState = (v, item) => {
-  if (!v)
+const changeTodoState = (item) => {
+  if (todoStateEnable.value)
     item.state = !item.state
 }
 </script>
@@ -44,10 +47,10 @@ const changeTodoState = (v, item) => {
   </el-dialog>
   <div class="date-todo-item-box">
     <div class="date-todo-item-ctrl-left">
-      <span @click="changeTodoState(overDueState,todoItem)"
-            :style="{borderColor:overDueState? 'var(--you-button-bgc-disabled)':todoItem.gradeColor,
+      <span @click="changeTodoState(todoItem)"
+            :style="{borderColor:!todoStateEnable? 'var(--you-button-bgc-disabled)':todoItem.gradeColor,
             color:todoItem.state? todoItem.gradeColor:'var(--you-background-color)',
-            cursor:overDueState? 'not-allowed':'pointer'}">
+            cursor:!todoStateEnable? 'not-allowed':'pointer'}">
         ✔
       </span>
       <div class="date-todo-item-info">
@@ -60,6 +63,9 @@ const changeTodoState = (v, item) => {
           {{ todoItem.todoDeadline.hour }}:{{ todoItem.todoDeadline.minute }}
           <span style="color: #ff2f2f;margin-left: 5px" v-if="overDueState">
             逾期
+          </span>
+          <span style="color: #47d161;margin-left: 5px" v-if="!overDueState&&todoItem.state">
+            完成
           </span>
         </div>
       </div>

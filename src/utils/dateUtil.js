@@ -1,8 +1,14 @@
 export default {
-    // 判断选择的日期与控制台日期先后
+    // 判断选择的日期与控制台日期先后  是否可添加
     judgeDate(elDatePickerDeadline,selectedDate) {
         const selectDate = new Date(selectedDate[0],selectedDate[1]-1,selectedDate[2])
         return elDatePickerDeadline >= selectDate;
+    },
+    // 判断两日期先后  是否可改变todo状态  true可改变
+    judgeTodoStateChangeEnableUtil(item) {
+        const today = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
+        const selectDate = new Date(item.todoDeadline.year, item.todoDeadline.month-1, item.todoDeadline.day)
+        return selectDate >= today
     },
 
     // 是否逾期
@@ -11,6 +17,7 @@ export default {
         const date_ = new Date(date[0],date[1]-1,date[2])
         return now > date_ && !state;
     },
+
 
     getCurrentDateUtil() {
         let now = new Date();
