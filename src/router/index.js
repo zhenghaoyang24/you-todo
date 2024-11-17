@@ -27,14 +27,6 @@ const router = createRouter({
         title:'有待办 | 专注'
       }
     },
-    {
-      path: '/data',
-      name: 'data',
-      component: () => import('../views/DataView.vue'),
-      meta:{
-        title:'有待办 | 数据'
-      }
-    },
   ],
 })
 

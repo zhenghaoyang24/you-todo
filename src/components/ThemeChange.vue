@@ -12,11 +12,14 @@ const changeThemeFn = () => {
 </script>
 
 <template>
-  <div class="theme-button" @click="changeThemeFn"></div>
+  <button class="theme-button" @click="changeThemeFn"></button>
 </template>
 
 <style scoped>
 .theme-button {
+  background-color: var(--you-background-color);
+  outline: none;
+  border: none;
   background-image: var(--theme-button-image);
   cursor: pointer;
   width: calc(var(--aside-bar-width) - 10px);

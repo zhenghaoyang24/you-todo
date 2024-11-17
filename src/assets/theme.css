@@ -4,6 +4,7 @@
     --aside-todo-button-image: url('icon/aside-bar/todo-light.png');
     --aside-data-button-image: url('icon/aside-bar/data-light.png');
     --aside-timer-button-image: url('icon/aside-bar/timer-light.png');
+    --dialog-button-setting-image: url('icon/aside-bar/setting_dark.png');
     --aside-border-right-color: #d5d5d5;
     --p-text-color: #000000;
     --el-calendar-border-color: #d1d1d1;
@@ -14,6 +15,7 @@
     --you-button-bgc-disabled: #9c9c9c;
     --you-button-color-disabled: #dadada;
     --date-todo-item-del-color: #aaaaaa;
+    --you-dialog-box-shadow:rgba(147, 147, 147, 0.3);
 
     /*覆盖element-plus值*/
     --el-disabled-border-color: var(--el-calendar-border-color);
@@ -32,6 +34,7 @@
     --aside-todo-button-image:url('icon/aside-bar/todo-dark.png');
     --aside-data-button-image:url('icon/aside-bar/data-dark.png');
     --aside-timer-button-image:url('icon/aside-bar/timer-dark.png');
+    --dialog-button-setting-image: url('icon/aside-bar/setting_light.png');
     --aside-border-right-color: #353535;
     --p-text-color:white;
     --el-calendar-border-color: #3e3e3e;
@@ -42,6 +45,8 @@
     --you-button-bgc-disabled: #4c4c4c;
     --you-button-color-disabled: #888888;
     --date-todo-item-del-color: #595959;
+    --you-dialog-box-shadow: rgba(156, 156, 156, 0.3);
+
 
     /*覆盖element-plus值*/
     --el-disabled-border-color: var(--el-calendar-border-color);

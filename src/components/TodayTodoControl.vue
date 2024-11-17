@@ -76,7 +76,7 @@ const addTodoBtnFn = () => {
   <div class="add-todo-box" tabindex="-1" v-show="addTodoAllow(selectedDate)">
     <div class="add-todo-input">
       <TodoGradeColor box-height="20" box-width="20" v-model="modelValue"></TodoGradeColor>
-      <input type="text" placeholder='添加任务' v-model.trim="todoTitle">
+      <input @keyup.enter="addTodoBtnFn" type="text" placeholder='添加任务' v-model.trim="todoTitle">
     </div>
     <div class="el-date-picker-box">
       <el-date-picker @focus="errorMsg = ''"

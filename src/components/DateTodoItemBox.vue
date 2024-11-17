@@ -64,7 +64,7 @@ const changeTodoState = (item) => {
           <span style="color: #ff2f2f;margin-left: 5px" v-if="overDueState">
             逾期
           </span>
-          <span style="color: #47d161;margin-left: 5px" v-if="!overDueState&&todoItem.state">
+          <span style="color: #00dc58;margin-left: 5px" v-if="!overDueState&&todoItem.state">
             完成
           </span>
         </div>

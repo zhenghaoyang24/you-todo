@@ -3,21 +3,25 @@ import WebIcon from "@/components/WebIcon.vue";
 import ThemeChange from "@/components/ThemeChange.vue";
 import {useSettingStore} from "@/stores/setting.js";
 const store = useSettingStore();
-import {onBeforeMount} from "vue";
+import {onBeforeMount,ref} from "vue";
+import YouDialog from "@/components/YouDialog.vue";
+import ShowDialogButton from "@/components/ShowDialogButton.vue";
 onBeforeMount(()=>{
   store.storeGetTheme()
 })
+const dialogShow = ref(false)
 </script>
 
 <template>
+  <YouDialog title="设置" v-model="dialogShow"></YouDialog>
   <aside class="aside-bar">
     <div class="aside-bar-link">
       <WebIcon></WebIcon>
       <RouterLink to="/todo" class="aside-bar-link-todo"></RouterLink>
       <RouterLink to="/timer" class="aside-bar-link-timer"></RouterLink>
-      <RouterLink to="/data" class="aside-bar-link-data"></RouterLink>
     </div>
-    <div>
+    <div class="aside-bar-bottom-button">
+      <ShowDialogButton title="设置" type="setting" @click="()=>dialogShow = true"></ShowDialogButton>
       <ThemeChange></ThemeChange>
     </div>
   </aside>
@@ -29,6 +33,9 @@ onBeforeMount(()=>{
 </template>
 
 <style scoped>
+.aside-bar-bottom-button>button{
+  margin-bottom: 5px;
+}
 .aside-bar {
   position: fixed; /* 固定侧边栏（滚动时保持原位）*/
   z-index: 1; /* 保持领先 */
@@ -66,7 +73,7 @@ onBeforeMount(()=>{
 .aside-bar-link-timer{
   background-image: var(--aside-timer-button-image);
 }
-.aside-bar-link-data{
+.aside-bar-link-data{  /*data view 未用*/
   background-image: var(--aside-data-button-image);
 }
 .main-area {
