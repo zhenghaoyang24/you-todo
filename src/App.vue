@@ -21,7 +21,11 @@ const dialogShow = ref(false)
       <RouterLink to="/timer" class="aside-bar-link-timer"></RouterLink>
     </div>
     <div class="aside-bar-bottom-button">
-      <ShowDialogButton title="设置" type="setting" @click="()=>dialogShow = true"></ShowDialogButton>
+      <ShowDialogButton title="设置" type="setting" @click="()=>dialogShow = true">
+        <template #dialogItem>
+
+        </template>
+      </ShowDialogButton>
       <ThemeChange></ThemeChange>
     </div>
   </aside>

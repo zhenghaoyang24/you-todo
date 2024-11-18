@@ -5,6 +5,8 @@ export const useSettingStore = defineStore(
     'setting',
     () => {
         // 设置主题
+        const todoPromptSound = ref(true)  //待办完成时提示音
+        const addTodoPromptSound = ref(true)  //添加待办提示音
         const storeCurrentTheme = ref('light')
         const clockRemain = ref(0)  //剩余时间
         const totalTimer = ref(0)  //总时间 用于计算进度
@@ -38,7 +40,7 @@ export const useSettingStore = defineStore(
                 window.document.documentElement.setAttribute('theme', 'light')
             }
         }
-        return {totalTimer,todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
+        return {addTodoPromptSound,todoPromptSound,totalTimer,todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
         ,changeRingToneState,initTotalTimer}
     },
     {

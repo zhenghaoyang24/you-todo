@@ -5,9 +5,11 @@ import YouButton from "@/components/YouButton.vue";
 import {computed, ref} from "vue";
 import {useTodoStorage} from "@/stores/todo.js";
 import DateTodoItemBox from "@/components/DateTodoItemBox.vue";
+import {useSettingStore} from "@/stores/setting.js";
+const storeSetting = useSettingStore();
 
 const store = useTodoStorage();
-
+const addTodoAudioRef =ref(null)
 const props = defineProps({
   selectedDate: Array
 })
@@ -42,6 +44,11 @@ const addTodoBtnFn = () => {
       errorMsg.value = ''
       elDatePickerDeadline.value = null
       todoTitle.value = ''
+      console.log(storeSetting.todoPromptSound)
+      if (storeSetting.addTodoPromptSound === true){ //播放声音
+        addTodoAudioRef.value.play()
+      }
+
     } else {
       errorMsg.value = '发生错误。'
     }
@@ -53,6 +60,9 @@ const addTodoBtnFn = () => {
         errorMsg.value = ''
         elDatePickerDeadline.value = null
         todoTitle.value = ''
+        if (storeSetting.addTodoPromptSound === true){ //播放声音
+          addTodoAudioRef.value.play()
+        }
       } else {
         errorMsg.value = '发生错误。'
       }
@@ -76,7 +86,7 @@ const addTodoBtnFn = () => {
   <div class="add-todo-box" tabindex="-1" v-show="addTodoAllow(selectedDate)">
     <div class="add-todo-input">
       <TodoGradeColor box-height="20" box-width="20" v-model="modelValue"></TodoGradeColor>
-      <input @keyup.enter="addTodoBtnFn" type="text" placeholder='添加任务' v-model.trim="todoTitle">
+      <input @keyup.enter="addTodoBtnFn" type="text" placeholder='添加待办' v-model.trim="todoTitle">
     </div>
     <div class="el-date-picker-box">
       <el-date-picker @focus="errorMsg = ''"
@@ -90,6 +100,9 @@ const addTodoBtnFn = () => {
     </div>
     <div class="add-todo-btn-box">
       <span>{{ errorMsg }}</span>
+      <audio preload ref="addTodoAudioRef">
+        <source src="../assets/music/add-todo-notification.mp3"/>
+      </audio>
       <YouButton @click="addTodoBtnFn" :disabled="todoTitle.length===0">
         <template #buttonName>添加代办</template>
       </YouButton>

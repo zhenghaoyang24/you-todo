@@ -1,10 +1,13 @@
 <script setup>
 import {useTodoStorage} from "@/stores/todo.js";
+import {useSettingStore} from "@/stores/setting.js";
 import dateUtil from "@/utils/dateUtil.js";
 import {computed, ref} from "vue";
 
+const audioTodoRef = ref(null) //audio
 const centerDialogVisible = ref(false) //dialog
 const store = useTodoStorage();
+const storeSetting = useSettingStore();
 const props = defineProps({
   todoItem: {
     required: true
@@ -23,8 +26,14 @@ const deleteTodoItemFn = () => {
 
 }
 const changeTodoState = (item) => {
-  if (todoStateEnable.value)
+  if (todoStateEnable.value){
+    if (!item.state){  //未完成时，点击播放声音
+      if (storeSetting.todoPromptSound === true)
+        audioTodoRef.value.play()
+    }
     item.state = !item.state
+  }
+
 }
 </script>
 
@@ -47,6 +56,9 @@ const changeTodoState = (item) => {
   </el-dialog>
   <div class="date-todo-item-box">
     <div class="date-todo-item-ctrl-left">
+      <audio preload ref="audioTodoRef">
+        <source src="../assets/music/ding.mp3"/>
+      </audio>
       <span @click="changeTodoState(todoItem)"
             :style="{borderColor:!todoStateEnable? 'var(--you-button-bgc-disabled)':todoItem.gradeColor,
             color:todoItem.state? todoItem.gradeColor:'var(--you-background-color)',

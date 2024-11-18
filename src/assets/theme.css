@@ -16,6 +16,7 @@
     --you-button-color-disabled: #dadada;
     --date-todo-item-del-color: #aaaaaa;
     --you-dialog-box-shadow:rgba(147, 147, 147, 0.3);
+    --dialog-state-button-hover-color: #dcdcdc;
 
     /*覆盖element-plus值*/
     --el-disabled-border-color: var(--el-calendar-border-color);
@@ -46,6 +47,7 @@
     --you-button-color-disabled: #888888;
     --date-todo-item-del-color: #595959;
     --you-dialog-box-shadow: rgba(156, 156, 156, 0.3);
+    --dialog-state-button-hover-color: #515151;
 
 
     /*覆盖element-plus值*/
