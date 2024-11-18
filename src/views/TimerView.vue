@@ -169,6 +169,11 @@ const startBtnState = computed(() => {  //启动按钮是否可按
 </template>
 
 <style scoped>
+.demo-progress{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
 .demo-progress .el-progress--line {
   margin-bottom: 50px;
   width: 300px;
