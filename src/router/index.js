@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect:'/todo',
+      redirect:'/calendar',
       meta:{
         title:'有待办 | 待办'
       }
