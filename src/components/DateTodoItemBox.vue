@@ -100,9 +100,11 @@ const changeTodoState = (item) => {
     outline: none;
     background-color: var(--you-background-color);
     font-size: 18px;
+
   }
 
   > div {
+    transition: all var(--transition-time);
     color: var(--p-text-color);
     font-size: 10px;
     font-weight: 500;

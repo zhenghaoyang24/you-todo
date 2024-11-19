@@ -5,7 +5,8 @@ import hashUtil from "@/utils/hashUtil.js";
 export const useTodoStorage = defineStore(
     'todos',
     ()=>{
-        const todoListStorage = ref([])
+        const todoListStorage = ref([
+        ])
         const  addTodoStorage = (todayBoolean,todoTitle,gradeColor,startArr,endArr)=>{
             const todoItemStorage ={
                 todoId: 'id',

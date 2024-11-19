@@ -23,7 +23,6 @@
   -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
   background-color:var(--webkit-scrollbar-track-bgc);
 }
-
 html, body{
   overflow-x: hidden;
   min-width: 940px;
