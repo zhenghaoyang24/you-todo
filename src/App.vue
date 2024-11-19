@@ -3,9 +3,12 @@ import WebIcon from "@/components/WebIcon.vue";
 import ThemeChange from "@/components/ThemeChange.vue";
 import {useSettingStore} from "@/stores/setting.js";
 const store = useSettingStore();
-import {onBeforeMount,ref} from "vue";
+import {onBeforeMount,ref,provide} from "vue";
 import YouDialog from "@/components/YouDialog.vue";
 import ShowDialogButton from "@/components/ShowDialogButton.vue";
+const finishTodoAudio = ref(null) //audio
+
+provide('finishTodoAudio',finishTodoAudio)
 onBeforeMount(()=>{
   store.storeGetTheme()
 })
@@ -13,10 +16,14 @@ const dialogShow = ref(false)
 </script>
 
 <template>
+  <audio preload ref="finishTodoAudio">
+    <source src="@/assets/music/ding.mp3"/>
+  </audio>
   <YouDialog title="设置" v-model="dialogShow"></YouDialog>
   <aside class="aside-bar">
     <div class="aside-bar-link">
       <WebIcon></WebIcon>
+      <RouterLink to="/calendar" class="aside-bar-link-calendar"></RouterLink>
       <RouterLink to="/todo" class="aside-bar-link-todo"></RouterLink>
       <RouterLink to="/timer" class="aside-bar-link-timer"></RouterLink>
     </div>
@@ -72,6 +79,9 @@ const dialogShow = ref(false)
   }
 }
 .aside-bar-link-todo{
+  background-image: var(--aside-todo-list-button-image);
+}
+.aside-bar-link-calendar{
   background-image: var(--aside-todo-button-image);
 }
 .aside-bar-link-timer{

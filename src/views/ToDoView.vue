@@ -1,248 +1,115 @@
 <script setup>
-import {ref, watch, onBeforeMount,computed} from 'vue'
-import dateUtil from "@/utils/dateUtil.js";
-import TodayTodoControl from "@/components/TodayTodoControl.vue";
+import {computed, ref} from "vue";
 import {useTodoStorage} from "@/stores/todo.js";
-const store = useTodoStorage();
+import DateTodoItemBox from "@/components/DateTodoItemBox.vue";
+import dateUtil from "@/utils/dateUtil.js";
 
-const value = ref(new Date())
-const dateToday = ref([])
-const dateTodos = date=>{
-  const dateArr = date.day.split("-")
-  const theDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
-  return store.todoListStorage.filter((item) => {
-    const start = new Date(item.todoStartDate.year, item.todoStartDate.month, item.todoStartDate.day);
-    const end = new Date(item.todoDeadline.year, item.todoDeadline.month, item.todoDeadline.day);
-    return theDate >= start && theDate <= end
-  })
-}
-onBeforeMount(() => {
-  // 页面打开获取时间
-  dateToday.value = dateUtil.getCurrentDateUtil()
+const store = useTodoStorage();
+const todoAll = ref(
+    store.todoListStorage
+)
+const todoIng = computed(() => {
+  return todoAll.value.filter(item => {
+    return dateUtil.judgeTodoStateChangeEnableUtil(item) && (item.state === false)
+  }).reverse()
 })
-// 切换月份
-watch(value, (newValue, oldValue) => {
-  dateToday.value = dateUtil.dealDateUtil(newValue);
+const todoAlready = computed(() => {
+  return todoAll.value.filter(item => {
+    return item.state === true
+  }).reverse()
 })
-// 点击日历
-const calendarDayFn = (data) => {
-  dateToday.value = dateUtil.dealDateUtil(data.date);
-}
+const todoOverdue = computed(() => {
+  return todoAll.value.filter(item => {
+    return !dateUtil.judgeTodoStateChangeEnableUtil(item) && (item.state === false)
+  }).reverse()
+})
+
 </script>
 
 <template>
-  <div class="todo-view-box">
-    <ElCalendar v-model="value">
-      <template #date-cell="{ data }">
-        <div class="el-calendar-day-slot" @click="calendarDayFn(data)">
-          <span class="slot-day">{{ parseInt(data.day.split("-").slice(2).join("-"), 10) }}</span>
+  <div class="todo-list-view">
+    <div class="todo-list-view-title">待办列表</div>
+    <div class="todo-list-view-box">
+      <div class="todo-list-category-box" style="flex: 1">
+        <div>🟦正在进行</div>
+        <div class="todo-list-item-box">
+          <DateTodoItemBox v-for="item in todoIng" :key="item.todoId" :todo-item="item"></DateTodoItemBox>
         </div>
-        <div class="todo-date-list-box">
-          <div class="todo-date-list-item-box" v-for="item in dateTodos(data)" :style="{backgroundColor:item.gradeColor}">
-            <span :title="item.todoTitle">{{item.todoTitle}}</span>
-            <span v-if="dateUtil.judgeOverdueUtil([item.todoDeadline.year,item.todoDeadline.month,item.todoDeadline.day],item.state)">
-              ✘
-            </span>
-            <span v-else-if="item.state">✔</span>
-            </div>
+      </div>
+      <div class="todo-list-category-box" style="flex: 1">
+        <div>🟩已完成</div>
+        <div class="todo-list-item-box">
+          <DateTodoItemBox v-for="item in todoAlready" :key="item.todoId" :todo-item="item"></DateTodoItemBox>
         </div>
-      </template>
-    </ElCalendar>
-    <div class="today-todo-control-box">
-      <TodayTodoControl :selectedDate="dateToday"></TodayTodoControl>
+      </div>
+      <div class="todo-list-category-box" style="flex: 1">
+        <div>🟥逾期待办</div>
+        <div class="todo-list-item-box">
+          <DateTodoItemBox v-for="item in todoOverdue" :key="item.todoId" :todo-item="item"></DateTodoItemBox>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.todo-date-list-item-box>span:nth-child(1){
-  flex: 1;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.todo-date-list-box{
-  transition: all var(--transition-time);
-  margin-top: 2px;
-  padding-top: 2px;
-  z-index: 1;
-  height: max-content;
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  overflow-y: auto;
+.todo-list-item-box {
+  padding: 10px 0;
+  overflow-y: scroll;
   overflow-x: hidden;
-  >div{
-    display: flex;
-    justify-content: space-between;
-    text-overflow: ellipsis;
-    color: var(--p-text-color);
-    transition: all var(--transition-time);
-    padding: 2px 4px;
-    font-size: 10px;
-    height: 15px;
-    margin-bottom: 5px;
-    background-color: #329fef;
-  }
-}
-.todo-date-list-box::-webkit-scrollbar
-{
-  width:3px;
-  height:3px;
-  background-color:var(--you-background-color);
-}
-/*定义滚动条轨道*/
-.todo-date-list-box::-webkit-scrollbar-track
-{
-  -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
-  border-radius:10%;
-  background-color:var(--you-background-color);
-}
-/*定义滑块*/
-.todo-date-list-box::-webkit-scrollbar-thumb
-{
-  -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
-  background-color:var(--webkit-scrollbar-track-bgc);
-}
-
-
-.todo-view-box {
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
-
-/*插槽*/
-:deep(.el-calendar-day) {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  color: var(--p-text-color);
-  transition: all var(--transition-time);
-  padding: 2px;
-  background-color: var(--you-background-color);
 }
 
-:deep(.el-calendar-day:hover) {
-  background: none !important;
-  .slot-day {
-    transition: all var(--transition-time);
-    border: 3px solid var(--el-calendar-day-span-border-color) !important;
-  }
+.todo-list-item-box::-webkit-scrollbar {
+  width: 3px;
+  /*  background-color: var(--you-background-color);*/
+  background: none;
 }
 
-:deep(.is-selected) {
-  transition: all var(--transition-time);
-  background: none !important;
-
-  .slot-day {
-    border-color: var(--el-calendar-day-span-border-color) !important;
-  }
+/*定义滚动条轨道
+ 内阴影+圆角*/
+.todo-list-item-box::-webkit-scrollbar-track {
+  -webkit-box-shadow: none;
 }
 
-:deep(.is-today) {
-  transition: all var(--transition-time);
-  background: none !important;
-
-  .slot-day {
-    border-color: var(--el-calendar-day-span-border-color) !important;
-  }
-}
-
-.el-calendar-day-slot {
-  transition: all var(--transition-time);
-  background-color: var(--you-background-color);
-  z-index: 2;
-  width: 100%;
-}
-
-.slot-day {
-  transition: all var(--transition-time);
-  display: inline-block;
-  font-size: 15px;
-  height: var(--el-calendar-day-span-size);
-  width: var(--el-calendar-day-span-size);
-  line-height: var(--el-calendar-day-span-size);
-  text-align: center;
-  border-radius: 100%;
-  border: 3px solid var(--you-background-color);
+/*定义滑块
+ 内阴影+圆角*/
+.todo-list-item-box::-webkit-scrollbar-thumb {
+  background-color: var(--webkit-scrollbar-track-bgc);
 }
 
 
-.today-todo-control-box {
+.todo-list-category-box {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  border-left: 1px solid var(--el-calendar-border-color);
-  width: 350px;
-  background-color: var(--you-background-color);
-  transition: background-color 0.2s;
+
+  > div {
+    color: var(--p-text-color);
+  }
 }
 
-:deep(.el-calendar) {
-  --el-calendar-cell-width: 15vh;
-  transition: all var(--transition-time);
+.todo-list-view-box {
+  overflow: hidden;
+  display: flex;
   flex: 1;
-  height: 100%;
-  background-color: var(--you-background-color);
+  border-top: 1px solid var(--el-border-color-light);
+  padding: 10px 20px;
 }
 
-:deep(.el-calendar__header) {
-  transition: all var(--transition-time);
-  background-color: var(--you-background-color);
-  border-bottom-color: var(--el-calendar-border-color);
-
-}
-
-:deep(.el-calendar__body) {
-  user-select: none;
-  padding: 5px 30px;
-  transition: all var(--transition-time);
-  background-color: var(--you-background-color);
-}
-
-/*日期title*/
-:deep(.el-calendar__title) {
-  transition: all var(--transition-time);
-  color: var(--p-text-color);
+.todo-list-view-title {
+  padding: 12px 20px;
   font-size: 25px;
   font-weight: bold;
-}
-
-:deep(.el-calendar-table) {
-  border: none !important;
-}
-
-/*星期文字*/
-:deep(.el-calendar-table>thead>th) {
-  transition: all 0.2s;
   color: var(--p-text-color);
-  font-weight: bold;
 }
 
-:deep(.current) {
-  height: min(90px);
-}
-
-
-:deep(.prev span) {
-  color: #737373;
-}
-
-
-/*按钮*/
-:deep(.el-button--small) {
-  transition: all var(--transition-time);
-  color: var(--p-text-color);
-  border: 1px solid var(--el-calendar-border-color);
-  background-color: var(--you-background-color);
-}
-
-:deep(.el-button--small:hover) {
-  background-color: var(--el-button-small-hover);
-}
-
-:deep(.el-calendar__button-group) {
-  line-height: 30px;
+.todo-list-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>

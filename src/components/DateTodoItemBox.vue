@@ -2,9 +2,9 @@
 import {useTodoStorage} from "@/stores/todo.js";
 import {useSettingStore} from "@/stores/setting.js";
 import dateUtil from "@/utils/dateUtil.js";
-import {computed, ref} from "vue";
+import {computed, ref, inject} from "vue";
 
-const audioTodoRef = ref(null) //audio
+const finishTodoAudio = inject('finishTodoAudio')
 const centerDialogVisible = ref(false) //dialog
 const store = useTodoStorage();
 const storeSetting = useSettingStore();
@@ -13,8 +13,8 @@ const props = defineProps({
     required: true
   }
 })
-const todoStateEnable = computed(()=>{
-  return  dateUtil.judgeTodoStateChangeEnableUtil(props.todoItem)
+const todoStateEnable = computed(() => {
+  return dateUtil.judgeTodoStateChangeEnableUtil(props.todoItem)
 })
 const overDueState = computed(() => {   //是否逾期
   return dateUtil.judgeOverdueUtil([props.todoItem.todoDeadline.year, props.todoItem.todoDeadline.month, props.todoItem.todoDeadline.day], props.todoItem.state)
@@ -26,10 +26,10 @@ const deleteTodoItemFn = () => {
 
 }
 const changeTodoState = (item) => {
-  if (todoStateEnable.value){
-    if (!item.state){  //未完成时，点击播放声音
+  if (todoStateEnable.value) {
+    if (!item.state) {  //未完成时，点击播放声音
       if (storeSetting.todoPromptSound === true)
-        audioTodoRef.value.play()
+        finishTodoAudio.value.play()
     }
     item.state = !item.state
   }
@@ -56,9 +56,7 @@ const changeTodoState = (item) => {
   </el-dialog>
   <div class="date-todo-item-box">
     <div class="date-todo-item-ctrl-left">
-      <audio preload ref="audioTodoRef">
-        <source src="../assets/music/ding.mp3"/>
-      </audio>
+
       <span @click="changeTodoState(todoItem)"
             :style="{borderColor:!todoStateEnable? 'var(--you-button-bgc-disabled)':todoItem.gradeColor,
             color:todoItem.state? todoItem.gradeColor:'var(--you-background-color)',

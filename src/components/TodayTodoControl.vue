@@ -4,11 +4,10 @@ import TodoGradeColor from "@/components/TodoGradeColor.vue";
 import YouButton from "@/components/YouButton.vue";
 import {computed, ref} from "vue";
 import {useTodoStorage} from "@/stores/todo.js";
+const store = useTodoStorage();
 import DateTodoItemBox from "@/components/DateTodoItemBox.vue";
 import {useSettingStore} from "@/stores/setting.js";
 const storeSetting = useSettingStore();
-
-const store = useTodoStorage();
 const addTodoAudioRef =ref(null)
 const props = defineProps({
   selectedDate: Array

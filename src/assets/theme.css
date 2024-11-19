@@ -1,6 +1,7 @@
 :root[theme="light"] {
     --you-background-color: #efefef;
     --theme-button-image: url('icon/aside-bar/theme-button-moon.png');
+    --aside-todo-list-button-image: url('icon/aside-bar/todo-list-dark.png');
     --aside-todo-button-image: url('icon/aside-bar/todo-light.png');
     --aside-data-button-image: url('icon/aside-bar/data-light.png');
     --aside-timer-button-image: url('icon/aside-bar/timer-light.png');
@@ -10,7 +11,7 @@
     --el-calendar-border-color: #d1d1d1;
     --el-border-color-lighter: #dddddd !important;
     --el-button-small-hover: #e1e1e1;
-    --webkit-scrollbar-track-bgc: #a3a3a3;
+    --webkit-scrollbar-track-bgc: #8a8a8a;
     --select-grade-option-box-bgc: #ededed;
     --you-button-bgc-disabled: #9c9c9c;
     --you-button-color-disabled: #dadada;
@@ -32,6 +33,7 @@
 :root[theme="dark"] {
     --you-background-color: #252525;
     --theme-button-image:url('icon/aside-bar/theme-button-son.png');
+    --aside-todo-list-button-image: url('icon/aside-bar/todo-list-light.png');
     --aside-todo-button-image:url('icon/aside-bar/todo-dark.png');
     --aside-data-button-image:url('icon/aside-bar/data-dark.png');
     --aside-timer-button-image:url('icon/aside-bar/timer-dark.png');
