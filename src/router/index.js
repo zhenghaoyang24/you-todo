@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ToDoView from '../views/TodoView.vue'
+import CalendarView from '@/views/CalendarView.vue'
+import TodoView from '@/views/TodoView.vue'
+import TimerView from '@/views/TimerView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,29 +10,30 @@ const router = createRouter({
       path: '/',
       redirect:'/calendar',
       meta:{
-        title:'有待办 | 待办'
-      }
-    },
-    {
-      path: '/todo',
-      name: 'todo',
-      component: ToDoView,
-      meta:{
-        title:'有待办 | 待办'
+        title:'有待办 | 日历'
       }
     },
     {
       path: '/calendar',
       name: 'calendar',
-      component: () => import('../views/CalendarView.vue'),
+      component: CalendarView,
       meta:{
         title:'有待办 | 日历'
       }
     },
     {
+      path: '/todo',
+      name: 'todo',
+      component: TodoView,
+      meta:{
+        title:'有待办 | 待办'
+      }
+    },
+
+    {
       path: '/timer',
       name: 'timer',
-      component: () => import('../views/TimerView.vue'),
+      component: TimerView,
       meta:{
         title:'有待办 | 专注'
       }
