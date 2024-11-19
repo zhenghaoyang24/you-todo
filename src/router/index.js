@@ -10,7 +10,7 @@ const router = createRouter({
             title: '有待办 | 日历'
         }
     }, {
-        path: '/todo', name: 'todo', component: () => import('../views/TodoView.vue'), meta: {
+        path: '/todo', name: 'todo', component: () => import('../views/ToDoView.vue'), meta: {
             title: '有待办 | 待办'
         }
     }, {
