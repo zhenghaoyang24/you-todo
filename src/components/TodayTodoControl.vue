@@ -99,7 +99,7 @@ const addTodoBtnFn = () => {
     </div>
     <div class="add-todo-btn-box">
       <span>{{ errorMsg }}</span>
-      <audio preload ref="addTodoAudioRef">
+      <audio preload="auto" ref="addTodoAudioRef" >
         <source src="../assets/music/add-todo-notification.mp3"/>
       </audio>
       <YouButton @click="addTodoBtnFn" :disabled="todoTitle.length===0">
