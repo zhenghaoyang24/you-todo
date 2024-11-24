@@ -13,6 +13,9 @@ https://youtodo.pages.dev/
 - **待办分类**：根据待办状态进行分类，让管理更加有序。
 - **数据持久化存储**：使用浏览器本地存储技术，保护个人隐私。
 
+![image](https://github.com/user-attachments/assets/e75c0523-7f26-4fd6-9335-8ff6a5a063ea)
+![image](https://github.com/user-attachments/assets/70a883ce-f154-4ac4-a6fe-0970b1c3357d)
+
 ## 环境搭建🧱
 
 ### 克隆仓库
