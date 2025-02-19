@@ -1,11 +1,10 @@
 <script setup>
-import {ref, computed, onMounted, onBeforeUnmount} from "vue";
+import {ref, computed, onMounted,onUnmounted, onBeforeUnmount} from "vue";
 import YouButton from "@/components/YouButton.vue";
 import DoubleStateButton from "@/components/DoubleStateButton.vue";
 import {useSettingStore} from "@/stores/setting.js";
 
 const store = useSettingStore();
-
 
 onMounted(() => {
   timerHour.value = Math.floor(store.clockRemain / 3600)
@@ -72,6 +71,23 @@ const timerStateBtn = () => {
     timerClockStopState.value = true
   }
 }
+
+// 监听 暂停与开始
+// const handleKeyDownSpace = (event) => {
+//   if (event.key === 'space') {
+//     console.log('space')
+//     timerStateBtn()
+//   }
+// };
+// onMounted(() => {
+//   console.log('mounted space')
+//   window.addEventListener('keydown', handleKeyDownSpace);
+// });
+// // 在组件卸载时移除
+// onUnmounted(() => {
+//   window.removeEventListener('keydown', handleKeyDownSpace);
+// });
+
 const format = (percentage) => (percentage === 100 ? 'success' : 'exception')
 const optionsHour = Array.from({length: 24}).map((_, idx) => ({
   value: idx,
