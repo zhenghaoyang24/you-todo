@@ -234,8 +234,8 @@ const startBtnState = computed(() => {  //启动按钮是否可按
   align-items: center;
   color: var(--p-text-color);
   transition: all var(--transition-time);
-
   > span {
+    text-shadow: var(--current-time-text-shadow);
     width: fit-content;
     font-size: 9rem;
   }

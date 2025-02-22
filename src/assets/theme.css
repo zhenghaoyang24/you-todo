@@ -18,6 +18,7 @@
     --date-todo-item-del-color: #aaaaaa;
     --you-dialog-box-shadow:rgba(147, 147, 147, 0.3);
     --dialog-state-button-hover-color: #dcdcdc;
+    --current-time-text-shadow:-1px -1px 3px #dadada,3px 3px 4px #000000;
 
     /*覆盖element-plus值*/
     --el-disabled-border-color: var(--el-calendar-border-color);
@@ -50,7 +51,7 @@
     --date-todo-item-del-color: #595959;
     --you-dialog-box-shadow: rgba(156, 156, 156, 0.3);
     --dialog-state-button-hover-color: #515151;
-
+    --current-time-text-shadow:-2px -2px 3px #4b4b4b,2px 2px 8px #000000;
 
     /*覆盖element-plus值*/
     --el-disabled-border-color: var(--el-calendar-border-color);
