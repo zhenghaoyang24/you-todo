@@ -1,9 +1,9 @@
 <script setup>
-import {ref, computed, onMounted,onUnmounted, onBeforeUnmount} from "vue";
+import {ref, computed, onMounted,onUnmounted, onBeforeUnmount,watch} from "vue";
 import YouButton from "@/components/YouButton.vue";
 import DoubleStateButton from "@/components/DoubleStateButton.vue";
 import {useSettingStore} from "@/stores/setting.js";
-
+import dateUtil from "@/utils/dateUtil.js";
 const store = useSettingStore();
 
 onMounted(() => {
@@ -23,6 +23,25 @@ const processRate = computed(() => {  //计算进度
 })
 
 const editTimerState = ref(true) //true 为编辑
+
+/*获取当前时间。且每秒刷新*/
+// 定义计时器变量
+let timer;
+const currentData  = ref([])
+watch(editTimerState, (value) => {
+  if(!value){
+    // 获取当前时间，每秒刷新
+    timer = setInterval(() => {
+      // 获取当前时间并更新到响应式变量
+      currentData.value = dateUtil.getCurrentDateUtil()
+    }, 1000);
+  }else {
+    // 消除计时器
+    clearInterval(timer);
+
+  }
+})
+
 const audioMusicRef = ref(null) //audio
 const timerClockStopState = ref(false)  //true为暂停状态
 
@@ -161,6 +180,9 @@ const startBtnState = computed(() => {  //启动按钮是否可按
       </div>
     </div>
     <div v-else class="timer-view-clock-main">
+      <div class="timer-view-clock-current-time" >
+        {{currentData[0]}}年{{currentData[1]}}月{{currentData[2]}}日 {{currentData[3][0]}}:{{currentData[3][1]}}:{{currentData[3][2]}} {{currentData[4]}}
+      </div>
       <div class="timer-view-clock-box">
         <span v-if="timerHour!==0">{{ timerHour }}:</span>
         <span v-if="!(timerHour===0&&timerMinute===0)">{{ timerMinute }}:</span>
@@ -197,7 +219,15 @@ const startBtnState = computed(() => {  //启动按钮是否可按
 :deep(.el-progress__text) {
   min-width: 15px;
 }
-
+.timer-view-clock-current-time{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--p-text-color);
+  transition: all var(--transition-time);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+}
 .timer-view-clock-box {
   display: flex;
   justify-content: center;
@@ -207,7 +237,7 @@ const startBtnState = computed(() => {  //启动按钮是否可按
 
   > span {
     width: fit-content;
-    font-size: 8rem;
+    font-size: 9rem;
   }
 }
 
