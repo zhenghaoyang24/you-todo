@@ -1,10 +1,25 @@
 <script setup>
-import {ref, computed, onMounted,onUnmounted, onBeforeUnmount,watch} from "vue";
+import {ref, computed, onMounted, onBeforeUnmount,watch} from "vue";
 import YouButton from "@/components/YouButton.vue";
 import DoubleStateButton from "@/components/DoubleStateButton.vue";
 import {useSettingStore} from "@/stores/setting.js";
 import dateUtil from "@/utils/dateUtil.js";
 const store = useSettingStore();
+
+// 监听 暂停与开始 空格
+const handleKeyDownSpace = (event) => {
+  if (event.key === " " || event.keyCode === 32) {
+    timerStateBtn()
+  }
+};
+// 添加事件监听器
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDownSpace);
+});
+// 在组件卸载时移除
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeyDownSpace);
+});
 
 onMounted(() => {
   timerHour.value = Math.floor(store.clockRemain / 3600)
@@ -30,6 +45,7 @@ let timer;
 const currentData  = ref([])
 watch(editTimerState, (value) => {
   if(!value){
+    currentData.value = dateUtil.getCurrentDateUtil()
     // 获取当前时间，每秒刷新
     timer = setInterval(() => {
       // 获取当前时间并更新到响应式变量
@@ -91,21 +107,7 @@ const timerStateBtn = () => {
   }
 }
 
-// 监听 暂停与开始
-// const handleKeyDownSpace = (event) => {
-//   if (event.key === 'space') {
-//     console.log('space')
-//     timerStateBtn()
-//   }
-// };
-// onMounted(() => {
-//   console.log('mounted space')
-//   window.addEventListener('keydown', handleKeyDownSpace);
-// });
-// // 在组件卸载时移除
-// onUnmounted(() => {
-//   window.removeEventListener('keydown', handleKeyDownSpace);
-// });
+
 
 const format = (percentage) => (percentage === 100 ? 'success' : 'exception')
 const optionsHour = Array.from({length: 24}).map((_, idx) => ({
@@ -237,7 +239,7 @@ const startBtnState = computed(() => {  //启动按钮是否可按
   > span {
     text-shadow: var(--current-time-text-shadow);
     width: fit-content;
-    font-size: 9rem;
+    font-size: 10rem;
   }
 }
 

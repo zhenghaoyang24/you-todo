@@ -18,7 +18,7 @@ const buttonState = ref(true)
 <template>
   <button type="button" :disabled="props.btnDisabled"
           :class="['you-button', {'you-button-true':props.buttonState===true,'you-button-false':props.buttonState===false}]">
-    {{props.buttonState? '开始':'暂停'}}
+    {{props.buttonState? "Space 开始":"Space 暂停"}}
   </button>
 </template>
 

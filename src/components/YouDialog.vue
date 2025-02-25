@@ -7,9 +7,9 @@ const refDialog = ref(null)  //绑定dom
 watch(dialogShow, (value) => {
   nextTick(()=>{
     if (value){
-      console.log(refDialog.value.style.display = 'flex')
+      refDialog.value.style.display = 'flex'
     }else{
-      console.log(refDialog.value.style.display = 'none')
+      refDialog.value.style.display = 'none'
     }
   })
 },{immediate:true})
