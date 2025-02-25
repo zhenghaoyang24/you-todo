@@ -12,6 +12,12 @@ https://youtodo.pages.dev/
 - **倒计时功能**：设置特定时间的倒计时提醒，帮助你提高工作效率。
 - **待办分类**：根据待办状态进行分类，让管理更加有序。
 
+## 预览👀
+
+![预览图片1](https://github.com/user-attachments/assets/e75c0523-7f26-4fd6-9335-8ff6a5a063ea)
+![预览图片2](https://github.com/user-attachments/assets/70a883ce-f154-4ac4-a6fe-0970b1c3357d)
+![预览图片3](https://github.com/user-attachments/assets/3a783181-38a0-4628-b9bc-fb0ad0d66e5d)
+
 
 ## 环境搭建🚧
 
@@ -35,7 +41,3 @@ npm run dev
 # 构建与部署
 npm run build
 ```
-
-![image](https://github.com/user-attachments/assets/e75c0523-7f26-4fd6-9335-8ff6a5a063ea)
-![image](https://github.com/user-attachments/assets/70a883ce-f154-4ac4-a6fe-0970b1c3357d)
-![{2A4F3A11-404F-4090-AD73-96A49BB84BE9}](https://github.com/user-attachments/assets/3a783181-38a0-4628-b9bc-fb0ad0d66e5d)
