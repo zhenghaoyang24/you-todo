@@ -3,7 +3,7 @@ import WebIcon from "@/components/WebIcon.vue";
 import ThemeChange from "@/components/ThemeChange.vue";
 import {useSettingStore} from "@/stores/setting.js";
 const store = useSettingStore();
-import {onBeforeMount,ref,provide,onMounted} from "vue";
+import {onBeforeMount,ref,provide,watch} from "vue";
 import YouDialog from "@/components/YouDialog.vue";
 import ShowDialogButton from "@/components/ShowDialogButton.vue";
 const finishTodoAudio = ref(null) //audio
@@ -12,6 +12,16 @@ onBeforeMount(()=>{
   store.storeGetTheme()
 })
 const dialogShow = ref(false)
+
+// 监听全屏
+const mainArea = ref(null)
+watch(()=>store.fullScreenStatesStore, (value)=>{
+  if (value){  //全屏
+    mainArea.value.style.paddingLeft = '0'
+  }else{
+    mainArea.value.style.paddingLeft = 'calc(var(--aside-bar-width) + 20px)'
+  }
+})
 </script>
 
 <template>
@@ -19,7 +29,7 @@ const dialogShow = ref(false)
     <source src="@/assets/music/ding.mp3"/>
   </audio>
   <YouDialog title="设置" v-model="dialogShow"></YouDialog>
-  <aside class="aside-bar">
+  <aside class="aside-bar" v-show="!store.fullScreenStatesStore">
     <div class="aside-bar-link">
       <WebIcon></WebIcon>
       <RouterLink to="/calendar" class="aside-bar-link-btn-box">
@@ -64,7 +74,7 @@ const dialogShow = ref(false)
     </div>
   </aside>
 
-  <main class="main-area">
+  <main class="main-area" ref="mainArea">
     <RouterView/>
   </main>
 
