@@ -4,7 +4,47 @@ import YouButton from "@/components/YouButton.vue";
 import DoubleStateButton from "@/components/DoubleStateButton.vue";
 import {useSettingStore} from "@/stores/setting.js";
 import dateUtil from "@/utils/dateUtil.js";
+import FullScreen from "@/components/FullScreen.vue";
 const store = useSettingStore();
+/*全屏*/
+
+// 全屏切换逻辑
+const toggleFullscreen = () => {
+  if (!store.fullScreenStatesStore) { // 进入全屏
+    store.fullScreenStatesStore = true
+    enterFullscreen()
+  } else {
+    exitFullscreen()
+    store.fullScreenStatesStore = false
+  }
+}
+
+// 进入全屏
+const enterFullscreen = () => {
+  const element = document.documentElement
+  if (element.requestFullscreen) {
+    element.requestFullscreen()
+  } else if (element.mozRequestFullScreen) { /* Firefox */
+    element.mozRequestFullScreen()
+  } else if (element.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+    element.webkitRequestFullscreen()
+  } else if (element.msRequestFullscreen) { /* IE/Edge */
+    element.msRequestFullscreen()
+  }
+}
+
+// 退出全屏
+const exitFullscreen = () => {
+  if (document.exitFullscreen) {
+    document.exitFullscreen()
+  } else if (document.mozCancelFullScreen) { /* Firefox */
+    document.mozCancelFullScreen()
+  } else if (document.webkitExitFullscreen) { /* Chrome, Safari & Opera */
+    document.webkitExitFullscreen()
+  } else if (document.msExitFullscreen) { /* IE/Edge */
+    document.msExitFullscreen()
+  }
+}
 
 // 监听 暂停与开始 空格
 const handleKeyDownSpace = (event) => {
@@ -182,6 +222,9 @@ const startBtnState = computed(() => {  //启动按钮是否可按
       </div>
     </div>
     <div v-else class="timer-view-clock-main">
+      <div class="full-screen-box" @click="toggleFullscreen">
+        <FullScreen/>
+      </div>
       <div class="timer-view-clock-current-time" >
         {{currentData[0]}}年{{currentData[1]}}月{{currentData[2]}}日 {{currentData[3][0]}}:{{currentData[3][1]}}:{{currentData[3][2]}} {{currentData[4]}}
       </div>
@@ -209,6 +252,16 @@ const startBtnState = computed(() => {  //启动按钮是否可按
 </template>
 
 <style scoped>
+.full-screen-box{
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--p-text-color);
+}
+
+
 .demo-progress{
   flex: 1;
   display: flex;
