@@ -12,8 +12,7 @@ export const useSettingStore = defineStore(
         const totalTimer = ref(0)  //总时间 用于计算进度
         const ringToneState = ref(true)  //true为播放
         const todoGradeColor = ('#ea5455')
-        // 全屏状态
-        const fullScreenStatesStore = ref(false)
+
         const storeChangeTheme =(theme)=> {
             if (theme === 'dark') {
                 storeCurrentTheme.value = 'dark'
@@ -42,7 +41,7 @@ export const useSettingStore = defineStore(
                 window.document.documentElement.setAttribute('theme', 'light')
             }
         }
-        return {fullScreenStatesStore,addTodoPromptSound,todoPromptSound,totalTimer,todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
+        return {addTodoPromptSound,todoPromptSound,totalTimer,todoGradeColor,ringToneState,storeCurrentTheme, clockRemain,storeChangeTheme,storeGetTheme,subClockRemain,initClockRemain
         ,changeRingToneState,initTotalTimer}
     },
     {

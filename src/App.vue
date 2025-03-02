@@ -29,7 +29,7 @@ watch(()=>store.fullScreenStatesStore, (value)=>{
     <source src="@/assets/music/ding.mp3"/>
   </audio>
   <YouDialog title="设置" v-model="dialogShow"></YouDialog>
-  <aside class="aside-bar" v-show="!store.fullScreenStatesStore">
+  <aside class="aside-bar">
     <div class="aside-bar-link">
       <WebIcon></WebIcon>
       <RouterLink to="/calendar" class="aside-bar-link-btn-box">

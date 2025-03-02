@@ -7,15 +7,16 @@ import dateUtil from "@/utils/dateUtil.js";
 import FullScreen from "@/components/FullScreen.vue";
 const store = useSettingStore();
 /*全屏*/
-
+// 全屏状态
+const fullScreenStatesStore = ref(false)
 // 全屏切换逻辑
 const toggleFullscreen = () => {
-  if (!store.fullScreenStatesStore) { // 进入全屏
-    store.fullScreenStatesStore = true
+  if (!fullScreenStatesStore.value) { // 进入全屏
+    fullScreenStatesStore.value = true
     enterFullscreen()
   } else {
     exitFullscreen()
-    store.fullScreenStatesStore = false
+    fullScreenStatesStore.value = false
   }
 }
 
